@@ -1,5 +1,6 @@
 
 using GameZilla.DataAccess.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameZilla
 {
@@ -10,7 +11,7 @@ namespace GameZilla
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("No Connection String Was Found");

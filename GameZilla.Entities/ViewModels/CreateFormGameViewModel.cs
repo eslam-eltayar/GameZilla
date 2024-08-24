@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+
+
 
 namespace GameZilla.Entities.ViewModels
 {
@@ -14,12 +11,13 @@ namespace GameZilla.Entities.ViewModels
         [MaxLength(250)]
         public string Name { get; set; } = string.Empty;
 
+        [Display(Name = "Category")]
         public int CategoryId { get; set; } // FK
-        public IEnumerable<SelectListItem> Categories { get; set; } = Enumerable.Empty<SelectListItem>();
-
+        public IEnumerable<SelectListItem> CategoryList { get; set; } = Enumerable.Empty<SelectListItem>();
+        [Display(Name = "Supported Devices")]
         public List<int> SelectedDevices { get; set; } = new List<int>();
 
-        public IEnumerable<SelectListItem> Devices { get; set; } = Enumerable.Empty<SelectListItem>();
+        public IEnumerable<SelectListItem> DeviceList { get; set; } = Enumerable.Empty<SelectListItem>();
 
 
         [MaxLength(2500)]
