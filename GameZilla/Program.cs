@@ -1,5 +1,7 @@
 
 using GameZilla.DataAccess.Data;
+using GameZilla.DataAccess.Repositories.Imp;
+using GameZilla.Entities.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameZilla
@@ -20,6 +22,8 @@ namespace GameZilla
             options.UseSqlServer(connectionString)
 
             );
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
 

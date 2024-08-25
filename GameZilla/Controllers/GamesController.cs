@@ -1,4 +1,5 @@
 ﻿using GameZilla.DataAccess.Data;
+using GameZilla.Entities.Repositories;
 using GameZilla.Entities.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,10 +9,14 @@ namespace GameZilla.Controllers
     public class GamesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GamesController(ApplicationDbContext context)
+        public GamesController(ApplicationDbContext context,
+            IUnitOfWork unitOfWork)
         {
             _context = context;
+            _unitOfWork = unitOfWork;
+
         }
 
         public IActionResult Index()
@@ -24,17 +29,10 @@ namespace GameZilla.Controllers
         {
             CreateFormGameViewModel viewModel = new()
             {
-                CategoryList = _context.Categories.Select
-                (c => new SelectListItem{ Value = c.Id.ToString(), Text = c.Name })
-                .OrderBy(c=>c.Text)
-                .ToList() ,
-                
-                DeviceList = _context.Devices.Select
-                (d => new SelectListItem { Value = d.Id.ToString(), Text = d.Name })
-                .OrderBy(d => d.Text)
-                .ToList()
-
+                CategoryList = _unitOfWork.Category.GetSelectList(),
+                DeviceList = _unitOfWork.Device.GetSelectList()
             };
+
             return View(viewModel);
         }
 
@@ -42,8 +40,11 @@ namespace GameZilla.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(CreateFormGameViewModel model)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                model.DeviceList = _unitOfWork.Device.GetSelectList();
+                model.CategoryList = _unitOfWork.Category.GetSelectList();
+
                 return View(model);
             }
 
