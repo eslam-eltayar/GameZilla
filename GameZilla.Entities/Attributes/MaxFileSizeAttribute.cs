@@ -27,7 +27,7 @@ namespace GameZilla.Entities.Attributes
                
                 if (file.Length > _maxFileSize)
                 {
-                    return new ValidationResult($"Maximum allowed size is {_maxFileSize/(1024*1024)}MB");
+                    return new ValidationResult($"Maximum allowed size is {_maxFileSize}Bytes");
                 }
 
 
