@@ -15,12 +15,12 @@ namespace GameZilla.DataAccess.Repositories.Imp
         {
             _context = context;
             Category = new CategoryRepository(context);
-            Device = new DeviceRepository(context);
+            Device = new DeviceRepository(context); 
         }
         public ICategoryRepository Category { get; private set; }
 
         public IDeviceRepository Device { get; private set; }
-
+        
         public int Complete()
         {
             return _context.SaveChanges();

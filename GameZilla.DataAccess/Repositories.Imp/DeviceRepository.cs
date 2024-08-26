@@ -2,6 +2,7 @@
 using GameZilla.Entities.Models;
 using GameZilla.Entities.Repositories;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace GameZilla.DataAccess.Repositories.Imp
             return _context.Devices.Select
                  (d => new SelectListItem { Value = d.Id.ToString(), Text = d.Name })
                  .OrderBy(d => d.Text)
+                 .AsNoTracking()
                  .ToList();
         }
     }

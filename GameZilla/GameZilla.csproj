@@ -18,7 +18,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GameZilla.DataAccess\GameZilla.DataAccess.csproj" />
-    <ProjectReference Include="..\GameZilla.Entities\GameZilla.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\images\games\" />
   </ItemGroup>
 
 

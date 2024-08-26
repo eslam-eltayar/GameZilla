@@ -10,13 +10,14 @@ namespace GameZilla.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IGameRepository _gameRepo;
 
         public GamesController(ApplicationDbContext context,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork, IGameRepository gameRepo)
         {
             _context = context;
             _unitOfWork = unitOfWork;
-
+            _gameRepo = gameRepo;
         }
 
         public IActionResult Index()
@@ -38,7 +39,7 @@ namespace GameZilla.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreateFormGameViewModel model)
+        public async Task<IActionResult> Create(CreateFormGameViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -47,6 +48,8 @@ namespace GameZilla.Controllers
 
                 return View(model);
             }
+
+            await _gameRepo.Create(model);
 
             return RedirectToAction(nameof(Index));
         }

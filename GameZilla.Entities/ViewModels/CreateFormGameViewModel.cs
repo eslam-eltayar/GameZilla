@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GameZilla.Entities.Attributes;
+using GameZilla.Entities.Settings;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
-
-
 
 namespace GameZilla.Entities.ViewModels
 {
@@ -15,7 +15,7 @@ namespace GameZilla.Entities.ViewModels
         public int CategoryId { get; set; } // FK
         public IEnumerable<SelectListItem> CategoryList { get; set; } = Enumerable.Empty<SelectListItem>();
         [Display(Name = "Supported Devices")]
-        public List<int> SelectedDevices { get; set; } = new List<int>();
+        public List<int> SelectedDevices { get; set; } = default!;
 
         public IEnumerable<SelectListItem> DeviceList { get; set; } = Enumerable.Empty<SelectListItem>();
 
@@ -23,6 +23,8 @@ namespace GameZilla.Entities.ViewModels
         [MaxLength(2500)]
         public string Description { get; set; } = string.Empty;
 
+
+        [AllowedExtentions(FileSettings.AllowedExtensions)]
         public IFormFile Cover { get; set; } = default!;
 
     }

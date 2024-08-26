@@ -24,6 +24,7 @@ namespace GameZilla
             );
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IGameRepository, GameRepository>();
 
             var app = builder.Build();
 

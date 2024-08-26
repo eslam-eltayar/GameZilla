@@ -26,6 +26,7 @@ namespace GameZilla.DataAccess.Repositories.Imp
             return _context.Categories.Select
                 (d => new SelectListItem { Value = d.Id.ToString(), Text = d.Name })
                 .OrderBy(d => d.Text)
+                .AsNoTracking()
                 .ToList();
         }
     }

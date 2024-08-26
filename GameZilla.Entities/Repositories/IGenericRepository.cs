@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 namespace GameZilla.Entities.Repositories
 {
     public interface IGenericRepository<T> where T : BaseEntity
-    {
-        
+    { 
         T GetFirstOrDefault(int id);
         void Add(T entity);
         void Remove(T entity);
