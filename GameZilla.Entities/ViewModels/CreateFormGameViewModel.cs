@@ -24,7 +24,8 @@ namespace GameZilla.Entities.ViewModels
         public string Description { get; set; } = string.Empty;
 
 
-        [AllowedExtentions(FileSettings.AllowedExtensions)]
+        [AllowedExtentions(FileSettings.AllowedExtensions),
+            MaxFileSize(FileSettings.MaxFileSizeInBytes)]
         public IFormFile Cover { get; set; } = default!;
 
     }
