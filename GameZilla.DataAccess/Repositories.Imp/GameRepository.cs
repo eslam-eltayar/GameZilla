@@ -4,6 +4,7 @@ using GameZilla.Entities.Repositories;
 using GameZilla.Entities.Settings;
 using GameZilla.Entities.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,16 @@ namespace GameZilla.DataAccess.Repositories.Imp
             _imagePath = $"{_webHostEnvironment.WebRootPath}{FileSettings.ImagesPath}";
         }
 
+        public IEnumerable<Game> GetAll()
+        {
+            return _context.Games
+                .Include(g=>g.Category)
+                .Include(g=>g.GameDevices)
+                .ThenInclude(g=>g.Device)
+                .AsNoTracking()
+                .ToList();
+        }
+
         public async Task Create(CreateFormGameViewModel model)
         {
             var coverName = $"{Guid.NewGuid()}{Path.GetExtension(model.Cover.FileName)}";
@@ -48,5 +59,7 @@ namespace GameZilla.DataAccess.Repositories.Imp
             _context.Add(game);
             _context.SaveChanges();
         }
+
+        
     }
 }

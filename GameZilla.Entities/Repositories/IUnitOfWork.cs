@@ -10,7 +10,7 @@ namespace GameZilla.Entities.Repositories
     {
         ICategoryRepository Category { get; }
         IDeviceRepository Device { get; }
-
+        IGameRepository Game { get; }
         int Complete();
     }
 }

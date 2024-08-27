@@ -1,4 +1,5 @@
 using GameZilla.Entities.Models;
+using GameZilla.Entities.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,22 +7,19 @@ namespace GameZilla.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var games = _unitOfWork.Game.GetAll();
+            return View(games);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

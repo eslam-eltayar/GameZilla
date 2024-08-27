@@ -10,19 +10,18 @@ namespace GameZilla.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IGameRepository _gameRepo;
 
         public GamesController(ApplicationDbContext context,
-            IUnitOfWork unitOfWork, IGameRepository gameRepo)
+            IUnitOfWork unitOfWork)
         {
             _context = context;
             _unitOfWork = unitOfWork;
-            _gameRepo = gameRepo;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var games = _unitOfWork.Game.GetAll();
+            return View(games);
         }
 
         [HttpGet]
@@ -49,7 +48,7 @@ namespace GameZilla.Controllers
                 return View(model);
             }
 
-            await _gameRepo.Create(model);
+            await _unitOfWork.Game.Create(model);
 
             return RedirectToAction(nameof(Index));
         }
