@@ -10,7 +10,6 @@ namespace GameZilla.Entities.Repositories
 {
     public interface IGameRepository : IGenericRepository<Game>
     {
-        IEnumerable<Game> GetAll();
         Task Create(CreateFormGameViewModel model);
     }
 }

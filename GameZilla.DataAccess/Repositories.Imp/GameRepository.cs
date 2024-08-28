@@ -28,16 +28,6 @@ namespace GameZilla.DataAccess.Repositories.Imp
             _imagePath = $"{_webHostEnvironment.WebRootPath}{FileSettings.ImagesPath}";
         }
 
-        public IEnumerable<Game> GetAll()
-        {
-            return _context.Games
-                .Include(g=>g.Category)
-                .Include(g=>g.GameDevices)
-                .ThenInclude(g=>g.Device)
-                .AsNoTracking()
-                .ToList();
-        }
-
         public async Task Create(CreateFormGameViewModel model)
         {
             var coverName = $"{Guid.NewGuid()}{Path.GetExtension(model.Cover.FileName)}";

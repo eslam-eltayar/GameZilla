@@ -24,6 +24,17 @@ namespace GameZilla.Controllers
             return View(games);
         }
 
+        public IActionResult Details(int id)
+        {
+            var game = _unitOfWork.Game.GetById(x=>x.Id == id , Includes: "GameDevices.Device,Category");
+            if(game is null)
+            {
+                return NotFound();
+            }
+
+            return View(game);
+        }
+
         [HttpGet]
         public IActionResult Create()
         {

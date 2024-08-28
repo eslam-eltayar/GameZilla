@@ -16,7 +16,7 @@ namespace GameZilla.Controllers
 
         public IActionResult Index()
         {
-            var games = _unitOfWork.Game.GetAll();
+            var games = _unitOfWork.Game.GetAll(Includes: "GameDevices.Device,Category");
             return View(games);
         }
 

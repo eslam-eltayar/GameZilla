@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 namespace GameZilla.Entities.Repositories
 {
     public interface IGenericRepository<T> where T : BaseEntity
-    { 
-        T GetFirstOrDefault(int id);
+    {
+        IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null, string? Includes = null);
+        T? GetById(Expression<Func<T, bool>>? predicate = null, string? Includes = null);
         void Add(T entity);
         void Remove(T entity);
         void Update(T entity);

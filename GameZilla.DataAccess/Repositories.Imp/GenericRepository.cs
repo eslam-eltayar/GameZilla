@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -22,9 +23,45 @@ namespace GameZilla.DataAccess.Repositories.Imp
             _dbSet = _context.Set<T>();
         }
 
-        public T GetFirstOrDefault(int id)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null, string? Includes = null)
         {
-            return _dbSet.Find(id);
+            IQueryable<T> query = _dbSet;
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (Includes != null)
+            {
+                foreach (var item in Includes.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(item);
+                }
+            }
+
+
+            return query.ToList();
+        }
+
+        public T? GetById(Expression<Func<T, bool>>? predicate = null, string? Includes = null)
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (Includes != null)
+            {
+                foreach (var item in Includes.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(item);
+                }
+            }
+
+            return query.SingleOrDefault();
         }
 
         public void Add(T entity)
@@ -45,5 +82,6 @@ namespace GameZilla.DataAccess.Repositories.Imp
             }
         }
 
+        
     }
 }
