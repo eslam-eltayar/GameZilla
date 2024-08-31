@@ -3,26 +3,26 @@
 }
 
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 /* Start override select2 */
@@ -84,3 +84,32 @@ body {
 }
 
 /*End of Custom Design*/
+
+/* Override SweetAlert2 Styles */
+.swal2-title, .swal2-html-container {
+    color: #00ffcc !important; /* Adjust the text color to match your site */
+}
+
+div:where(.swal2-container) div:where(.swal2-popup) {
+    background: #0f0e17 !important; /* Background color of the alert box */
+    border: 2px solid #00ffcc; /* Optional: Add a border to the alert box */
+}
+
+.swal2-actions button {
+    background-color: #1a0933 !important; /* Button background color */
+    color: #00ffcc !important; /* Button text color */
+    border: 2px solid #00ffcc !important; /* Button border color */
+}
+
+.swal2-actions .swal2-cancel {
+    background-color: #1a0933 !important; /* Cancel button background color */
+    color: #00ffcc !important; /* Cancel button text color */
+    border: 2px solid #00ffcc !important; /* Cancel button border color */
+}
+
+.swal2-actions .swal2-confirm {
+    background-color: #e63946 !important; /* Confirm button background color */
+    color: #fff !important; /* Confirm button text color */
+    border: 2px solid #e63946 !important; /* Confirm button border color */
+}
+/* End Override SweetAlert2 */

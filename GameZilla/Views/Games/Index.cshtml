@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Game>
 
 @{
-    ViewData["Title"] = "Games"; 
+    ViewData["Title"] = "Games";
 }
 
 <a class="btn btn-secondary btn-lg" asp-action="Create">
@@ -21,7 +21,7 @@ else
     <div class="mt-5">
         <table class="table table-bordered border-primary">
             <tbody>
-                @foreach(var game in Model)
+                @foreach (var game in Model)
                 {
                     <tr class="border-1 border-success">
                         <td>
@@ -50,4 +50,9 @@ else
             </tbody>
         </table>
     </div>
+}
+
+@section Scripts
+{
+    <script src="~/js/games-index.js" asp-append-version="true"></script>
 }
