@@ -46,6 +46,7 @@ namespace GameZilla.DataAccess.Repositories.Imp
             _context.SaveChanges();
         }
 
+        
         public async Task<Game?> Update(EditFormGameViewModel model)
         {
             var game = _context.Games
@@ -86,6 +87,31 @@ namespace GameZilla.DataAccess.Repositories.Imp
 
                 return null;
             }
+        }
+
+        public bool Delete(int id)
+        {
+            var isDeleted = false;
+
+            var game = _context.Games.Find(id);
+
+            if (game is null)
+                return isDeleted;
+
+            _context.Remove(game);
+
+            var effectedRows = _context.SaveChanges();
+
+            if (effectedRows > 0)
+            {
+                isDeleted = true;
+
+                var cover = Path.Combine(_imagePath, game.Cover);
+                File.Delete(cover);
+            }
+
+            return isDeleted;
+
         }
 
         private async Task<string> SaveCover(IFormFile cover)

@@ -12,5 +12,6 @@ namespace GameZilla.Entities.Repositories
     {
         Task Create(CreateFormGameViewModel model);
         Task<Game?> Update(EditFormGameViewModel model);
+        bool Delete(int id);
     }
 }

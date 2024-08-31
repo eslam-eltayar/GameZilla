@@ -8,13 +8,11 @@ namespace GameZilla.Controllers
 {
     public class GamesController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
 
         public GamesController(ApplicationDbContext context,
             IUnitOfWork unitOfWork)
         {
-            _context = context;
             _unitOfWork = unitOfWork;
         }
 
@@ -26,8 +24,8 @@ namespace GameZilla.Controllers
 
         public IActionResult Details(int id)
         {
-            var game = _unitOfWork.Game.GetById(x=>x.Id == id , Includes: "GameDevices.Device,Category");
-            if(game is null)
+            var game = _unitOfWork.Game.GetById(x => x.Id == id, Includes: "GameDevices.Device,Category");
+            if (game is null)
             {
                 return NotFound();
             }
@@ -78,7 +76,7 @@ namespace GameZilla.Controllers
                 Name = game.Name,
                 Description = game.Description,
                 CategoryId = game.CategoryId,
-                SelectedDevices = game.GameDevices.Select(d=>d.DeviceId).ToList(),
+                SelectedDevices = game.GameDevices.Select(d => d.DeviceId).ToList(),
                 CategoryList = _unitOfWork.Category.GetSelectList(),
                 DeviceList = _unitOfWork.Device.GetSelectList(),
                 CurrentCover = game.Cover
@@ -104,6 +102,14 @@ namespace GameZilla.Controllers
             await _unitOfWork.Game.Update(model);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            var isDeleted = _unitOfWork.Game.Delete(id);
+
+            return isDeleted ? Ok() : BadRequest();
         }
 
     }
