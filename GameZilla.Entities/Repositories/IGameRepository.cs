@@ -11,5 +11,6 @@ namespace GameZilla.Entities.Repositories
     public interface IGameRepository : IGenericRepository<Game>
     {
         Task Create(CreateFormGameViewModel model);
+        Task<Game?> Update(EditFormGameViewModel model);
     }
 }

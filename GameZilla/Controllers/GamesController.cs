@@ -20,7 +20,7 @@ namespace GameZilla.Controllers
 
         public IActionResult Index()
         {
-            var games = _unitOfWork.Game.GetAll();
+            var games = _unitOfWork.Game.GetAll(Includes: "GameDevices.Device,Category");
             return View(games);
         }
 
@@ -63,5 +63,48 @@ namespace GameZilla.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult Edit(int id)
+        {
+            var game = _unitOfWork.Game.GetById(x => x.Id == id);
+            if (game is null)
+            {
+                return NotFound();
+            }
+
+            EditFormGameViewModel viewModel = new()
+            {
+                Id = id,
+                Name = game.Name,
+                Description = game.Description,
+                CategoryId = game.CategoryId,
+                SelectedDevices = game.GameDevices.Select(d=>d.DeviceId).ToList(),
+                CategoryList = _unitOfWork.Category.GetSelectList(),
+                DeviceList = _unitOfWork.Device.GetSelectList(),
+                CurrentCover = game.Cover
+
+            };
+
+            return View(viewModel);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditFormGameViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.DeviceList = _unitOfWork.Device.GetSelectList();
+                model.CategoryList = _unitOfWork.Category.GetSelectList();
+
+                return View(model);
+            }
+
+            await _unitOfWork.Game.Update(model);
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

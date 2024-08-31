@@ -1,12 +1,12 @@
-﻿@model CreateFormGameViewModel
+﻿@model EditFormGameViewModel
 
 @{
-    ViewData["Title"] = "Create Game";
+    ViewData["Title"] = "Edit Game";
 }
 
 <h3>
     <i class="bi bi-plus-circle-dotted"></i>
-    Create New Game
+    Edit Game
 </h3>
 
 <form method="post" enctype="multipart/form-data">
@@ -56,7 +56,7 @@
             <button type="submit" class="btn btn-light text-black-50 mt-4">Save</button>
         </div>
         <div class="col-md-6 d-flex justify-content-center pt-4 overflow-hidden">
-            <img class="cover-preview d-none" alt="Cover" />
+            <img src="@($"{FileSettings.ImagesPath}/{Model.CurrentCover}")"  class="cover-preview" alt="Cover" />
         </div>
     </div>
 </form>
